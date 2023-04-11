@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>latihan leaflet</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+
+    <style>
+      #map {
+        height: 500px;
+        width: 1200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+      var map = L.map("map").setView([-6.930564, 107.6454], 13);
+
+      // membuat tile
+      googleStreets = L.tileLayer(
+        "http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}",
+        {
+          maxZoom: 200,
+          subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        }
+      ).addTo(map);
+
+      // mengubah icon marker
+      //   var myIcon = L.icon({
+      //     iconUrl: "army.png",
+      //     iconSize: [38, 95],
+      //     iconAnchor: [50, 64],
+      //     popupAnchor: [-3, -50],
+      //   });
+      //membuat marker
+      //   var marker = L.marker([-6.930564, 107.6454], { icon: myIcon }).addTo(map);
+      //   var marker = L.marker([-6.930564, 107.6454], { alt: "kosan" }).addTo(map);
+      //   marker.bindPopup("this is my home").openPopup();
+
+      // membuat event
+      //   function onMapClick(e) {
+      //     alert("You clicked the map at " + e.latlng);
+      //   }
+      //   map.on("click", onMapClick);
+
+      //   var popup = L.popup();
+
+      //   function onMapClick(e) {
+      //     popup
+      //       .setLatLng(e.latlng)
+      //       .setContent("You clicked the map at " + e.latlng.toString())
+      //       .openOn(map);
+      //   }
+
+      //   map.on("click", onMapClick);
+
+      // membuat polygon
+      //   var polygon = L.polygon([
+      //     [-6.930376, 107.645429],
+      //     [-6.930601, 107.645365],
+      //     [-6.930614, 107.645413],
+      //     [-6.930529, 107.645437],
+      //     [-6.930532, 107.645454],
+      //   ]).addTo(map);
+
+      //   var latlin = [
+      //     [-6.930376, 107.645429],
+      //     [-6.930601, 107.645365],
+      //     [-6.930614, 107.645413],
+      //     [-6.930529, 107.645437],
+      //     [-6.930532, 107.645454],
+      //   ];
+      var hamid = L.marker([-6.9018235, 107.6588253]).bindPopup(
+          "Masjid Al-Hamid 1"
+        ),
+        jannah = L.marker([-6.9028147, 107.6585209]).bindPopup(
+          "Masjid Jami Riyadhul Jannah"
+        ),
+        hikmah = L.marker([-6.9024952, 107.6632268]).bindPopup(
+          "Masjid Al Hikmah Jamaras"
+        );
+
+      var cities = L.layerGroup([hamid, jannah, hikmah]);
+
+      var osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap",
+      });
+
+      var streets = L.tileLayer(mapboxUrl, {
+        id: "mapbox/streets-v11",
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: mapboxAttribution,
+      });
+
+      var map = L.map("map", {
+        center: [-6.9018235, 107.6588253],
+        zoom: 10,
+        layers: [osm, cities],
+      });
+      var baseMaps = {
+        OpenStreetMap: osm,
+        "Mapbox Streets": streets,
+      };
+
+      var overlayMaps = {
+        Cities: cities,
+      };
+
+      var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+      var baseMaps = {
+        "<span style='color: gray'>Grayscale</span>": grayscale,
+        Streets: streets,
+      };
+
+      var crownHill = L.marker([-6.9018235, 107.6588253]).bindPopup(
+          "Gereja Pergerakan Kristus"
+        ),
+        rubyHill = L.marker([-6.9003084, 107.6409155]).bindPopup(
+          "Gereja Kristen Pasundan"
+        );
+
+      var parks = L.layerGroup([crownHill, rubyHill]);
+      var satellite = L.tileLayer(mapboxUrl, {
+        id: "MapID",
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: mapboxAttribution,
+      });
+
+      layerControl.addBaseLayer(satellite, "Satellite");
+      layerControl.addOverlay(parks, "Parks");
+    </script>
+  </body>
+</html>

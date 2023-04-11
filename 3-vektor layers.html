@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>latihan leaflet</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+
+    <style>
+      #map {
+        height: 500px;
+        width: 1200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+      var map = L.map("map").setView([17.385044, 78.486671], 13);
+
+      // membuat tile
+      googleStreets = L.tileLayer(
+        "http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}",
+        {
+          maxZoom: 200,
+          subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        }
+      ).addTo(map);
+
+      // Creating latlng object
+      // var latlngs = [
+      //   [17.385044, 78.486671],
+      //   [16.506174, 80.648015],
+      //   [17.000538, 81.804034],
+      //   [17.686816, 83.218482],
+      // ];
+
+      // var polyline = L.polyline(latlngs, { color: "red" }).addTo(map);
+      // var polygon = L.polygon(latlngs, { color: "blue" });
+
+      // var rectOptions = { color: "Red", weight: 1 }; // Creating rectOptions
+      // // Creating a rectangle
+      // var rectangle = L.rectangle(latlngs, rectOptions);
+      // rectangle.addTo(map); // Adding to rectangle to map
+      // // Adding to polygon to map
+      // polygon.addTo(map);
+
+      var circleCenter = [17.385044, 78.486671]; // Center of the circle
+      var circleOptions = {
+        color: "red",
+        fillColor: "#f03",
+        fillOpacity: 0,
+      };
+      // Creating a circle
+      var circle = L.circle(circleCenter, 50000, circleOptions);
+      circle.addTo(map); // Adding circle to the map
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>latihan leaflet</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+
+    <style>
+      #map {
+        height: 500px;
+        width: 1200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+      var map = L.map("map").setView([17.385044, 78.486671], 13);
+
+      // membuat tile
+      googleStreets = L.tileLayer(
+        "http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}",
+        {
+          maxZoom: 200,
+          subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        }
+      ).addTo(map);
+
+      // var marker = L.marker([17.385044, 78.486671]).addTo(map);
+
+      // Creating latlng object
+      var latlang = [
+        [
+          [17.385044, 78.486671],
+          [16.506174, 80.648015],
+          [17.686816, 83.218482],
+        ],
+        [
+          [13.08268, 80.270718],
+          [12.971599, 77.594563],
+          [15.828126, 78.037279],
+        ],
+      ];
+
+      // // Creating poly line options
+      // var multiPolyLineOptions = { color: "red" };
+
+      // // Creating multi poly-lines
+      // var multipolyline = L.polyline(latlang, multiPolyLineOptions);
+
+      // console.log(multipolyline);
+
+      // // Adding multi poly-line to map
+      // multipolyline.addTo(map);
+
+      // Creating poly line options
+      var multiPolygonOptions = { color: "red", weight: 8 };
+
+      // Creating multi poly-lines
+      var multipolygon = L.polygon(latlang, multiPolygonOptions);
+
+      console.log(multipolygon);
+
+      // Adding multi poly-line to map
+      multipolygon.addTo(map);
+    </script>
+  </body>
+</html>

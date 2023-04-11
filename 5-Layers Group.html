@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>latihan leaflet</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+
+    <style>
+      #map {
+        height: 500px;
+        width: 1200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+      var map = L.map("map").setView([17.385044, 78.486671], 13);
+
+      // membuat tile
+      googleStreets = L.tileLayer(
+        "http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}",
+        {
+          maxZoom: 200,
+          subdomains: ["mt0", "mt1", "mt2", "mt3"],
+        }
+      ).addTo(map);
+
+      // Creating markers
+      var hydMarker = new L.Marker([17.385044, 78.486671]);
+      var vskpMarker = new L.Marker([17.686816, 83.218482]);
+      var vjwdMarker = new L.Marker([16.506174, 80.648015]);
+
+      // Creating latlng object
+      var latlngs = [
+        [17.385044, 78.486671],
+        [16.506174, 80.648015],
+        [17.686816, 83.218482],
+      ];
+      // Creating a polygon
+      var polygon = L.polygon(latlngs, { color: "red" });
+
+      // Creating layer group
+      var layerGroup = L.layerGroup([
+        hydMarker,
+        vskpMarker,
+        vjwdMarker,
+        polygon,
+      ]);
+
+      // Adding layer group to map
+      layerGroup.addTo(map);
+
+      // Creating a circle
+      var circle = L.circle([16.506174, 80.648015], 50000, {
+        color: "red",
+        fillColor: "#f03",
+        fillOpacity: 0,
+      });
+
+      // Adding circle to the layer group
+      layerGroup.addLayer(circle);
+
+      // Removing layer from map
+      layerGroup.removeLayer(vjwdMarker);
+
+      // Creating feature group
+      var featureGroup = L.featureGroup([
+        hydMarker,
+        vskpMarker,
+        vjwdMarker,
+        polygon,
+      ]);
+
+      // Setting style to the feature group
+      featureGroup.setStyle({ color: "blue", opacity: 0.5 });
+
+      // Binding popup to the feature group
+      featureGroup.bindPopup("Feature Group");
+
+      // Adding layer group to map
+      featureGroup.addTo(map);
+    </script>
+  </body>
+</html>
